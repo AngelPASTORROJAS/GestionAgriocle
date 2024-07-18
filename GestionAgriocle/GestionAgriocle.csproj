@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="App\Database\Scripts\" />
+    <Folder Include="App\Interfaces\" />
+    <Folder Include="App\Model\" />
+    <Folder Include="App\Entity\" />
+    <Folder Include="App\Controllers\" />
+    <Folder Include="App\Services\" />
+    <Folder Include="App\Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.0.0" />
+  </ItemGroup>
+
+</Project>
