@@ -37,12 +37,15 @@ namespace GestionAgriocle.App.Database
                 Connection.Open();
                 MySqlCommand cmd = new MySqlCommand(query, Connection);
                 int i = cmd.ExecuteNonQuery();
-                Connection.Close();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 Console.WriteLine(ex.Source + " : " + ex.Message);
+            }
+            finally
+            {
+                Connection.Close();
             }
         }
         #endregion
