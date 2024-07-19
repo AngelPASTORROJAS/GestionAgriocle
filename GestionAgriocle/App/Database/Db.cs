@@ -5,10 +5,6 @@ namespace GestionAgriocle.App.Database
     internal class Db
     {
         #region "Attributs"
-        private readonly string _server = "127.0.0.1";
-        private readonly string _uid = "root";
-        private readonly string _password = "";
-        private readonly string _database = "challenge";
         private MySqlConnection _connection;
         #endregion
 
@@ -40,7 +36,6 @@ namespace GestionAgriocle.App.Database
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
                 Console.WriteLine(ex.Source + " : " + ex.Message);
             }
             finally

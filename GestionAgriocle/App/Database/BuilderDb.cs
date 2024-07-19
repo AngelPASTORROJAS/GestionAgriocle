@@ -9,21 +9,44 @@
         public BuilderDb(Db database)
         {
             _db = database;
-
         }
 
-        private void Build()
+        public void DropTables()
         {
+            string[] tables =
+            {
+                "Unite",
+                "Datation",
+                "Parcelle",
+
+                "Epandre",
+                "Posseder",
+                "Engrais",
+                "Element_Chimique",
+                "Culture",
+                "Production"
+            };
+
+            foreach (string table in tables)
+            {
+                Db.Query($"DROP TABLE {table};");
+            }
+        }
+
+        public void Build()
+        {
+            //string ai = "AUTO_INCREMENT";
             string ct = "CREATE TABLE ";
             string nn = "NOT NULL";
             string d = "DATE";
-            string si = "SMALL INT";
+            string si = "SMALLINT";
             string v5 = "VARCHAR(5)";
             string v20 = "VARCHAR(20)";
             string pk = "PRIMARY KEY";
             string fk = "FOREIGN KEY";
             string r = "REFERENCES";
             string n = "NUMERIC";
+            string c = "CONSTRAINT"; // Sert à vérifier si la clé étrangère existe dans la table de réference
             string[] listTables =
             {
                 "Parcelle (" +
@@ -40,7 +63,8 @@
                 "Production (" +
                     $" code_production {si} {pk} {nn}," +
                     $" nom_production {v20}," +
-                    $" unite {v20} {fk} {r} Unite(unite)" +
+                    $" unite {v20}," +
+                    $" {c} FK_UniteProduction {fk} (unite) {r} Unite(unite)" +
                 ");",
 
                 "Culture (" +
@@ -48,32 +72,44 @@
                     $" date_debut {d}," +
                     $" dat_fin {d}," +
                     $" qt_recolte {n}," +
-                    $" no_parcelle {si} {fk} {r} Parcelle(no_parcelle)," +
-                    $" code_production {si} {fk} {r} Production(code_production)" +
+                    $" no_parcelle {si}," +
+                    $" code_production {si}," +
+                    $" {c} FK_ProductionCulture {fk} (code_production) {r} Production(code_production)," +
+                    $" {c} FK_ParcelleCulture {fk} (no_parcelle) {r} Parcelle(no_parcelle)" +
                 ");",
 
-                "Element_Chimiques (" +
+                "Element_Chimique (" +
                     $" code_element {v5} {pk} {nn}," +
                     $" libelle_element {v20}," +
-                    $" unite {v20} {fk} {r} Unite(unite)" +
+                    $" unite {v20}," +
+                    $" {c} FK_UniteElement_Chimique {fk} (unite) {r} Unite(unite)" +
                 ");",
 
                 "Engrais (" +
                     $" id_engrais {v20} {pk} {nn}," +
                     $" nom_engrais {v20}," +
-                    $" unite {v20} {fk} {r} Unite(unite)" +
+                    $" unite {v20}," +
+                    $" {c} FK_UniteEngrais {fk} (unite) {r} Unite(unite)" +
                 ");",
 
                 "Posseder (" +
                     $" valeur {v20}," +
-                    $" id_engrais {v20} {fk} {r} Engrais(id_engrais)," +
-                    $" code_element {v20} {fk} {r} Element_Chimiques(code_element)" +
+                    $" id_engrais {v20}," +
+                    $" code_element {v20}," +
+                    $" {c} FK_EngraisPosseder {fk} (id_engrais) {r} Engrais(id_engrais)," +
+                    $" {c} FK_Element_ChimiquePosseder {fk} (code_element) {r} Element_Chimique(code_element)," +
+                    $" {pk} (id_engrais, code_element)" +
                 ");",
 
                 "Epandre (" +
                     $" qte_epandue {n}," +
-                    $" id_engrais {v20} {fk} {r} Engrais(id_engrais)," +
-                    $" no_parcelle {si} {fk} {r} Parcelle(no_parcelle)" +
+                    $" datation {d}," +
+                    $" id_engrais {v20}," +
+                    $" no_parcelle {si}," +
+                    $" {c} FK_DatationEpandre {fk} (datation) {r} Datation(datation)," +
+                    $" {c} FK_EngraisEpandre {fk} (id_engrais) {r} Engrais(id_engrais)," +
+                    $" {c} FK_ParcelleEpandre {fk} (no_parcelle) {r} Parcelle(no_parcelle)," +
+                    $" {pk} (id_engrais, no_parcelle)" +
                 ");"
             };
 
