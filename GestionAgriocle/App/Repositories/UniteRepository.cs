@@ -22,7 +22,7 @@ namespace GestionAgriocle.App.Repositories
 
         public void Add(Unite entity)
         {
-            using (MySqlCommand command = new MySqlCommand("INSERT INTO unite (unite) VALUES (@unite);",_database.Connection))
+            using (MySqlCommand command = new MySqlCommand("INSERT INTO Unite (unite) VALUES (@unite);",_database.Connection))
             {
                 command.Parameters.AddWithValue("@unite",entity.unite); // Set parameters
                 try
