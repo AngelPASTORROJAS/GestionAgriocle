@@ -8,12 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="App\Database\Scripts\" />
-    <Folder Include="App\Interfaces\" />
+    <Folder Include="App\Db\Scripts\" />
     <Folder Include="App\Model\" />
-    <Folder Include="App\Controllers\" />
     <Folder Include="App\Services\" />
-    <Folder Include="App\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

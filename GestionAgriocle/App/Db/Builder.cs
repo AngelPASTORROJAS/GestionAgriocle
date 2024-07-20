@@ -1,14 +1,32 @@
-﻿namespace GestionAgriocle.App.Database
+﻿using MySql.Data.MySqlClient;
+
+namespace GestionAgriocle.App.Db
 {
-    internal class BuilderDb
+    internal class Builder
     {
-        private readonly Db _db;
+        private readonly MySqlConnection _connection;
+        private MySqlConnection Connection { get => _connection; }
 
-        private Db Db {  get => _db; }
-
-        public BuilderDb(Db database)
+        public Builder(Database database)
         {
-            _db = database;
+            _connection = database.Connection;
+        }
+
+        private void Query(string query)
+        {
+            try
+            {
+                Connection.Open();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Source + " : " + exception.Message);
+                throw;
+            }
+            finally
+            {
+                Connection.Close();
+            }
         }
 
         public void DropTables()
@@ -29,7 +47,7 @@
 
             foreach (string table in tables)
             {
-                Db.Query($"DROP TABLE {table};");
+                Query($"DROP TABLE {table};");
             }
         }
 
@@ -115,10 +133,8 @@
 
             foreach (string table in listTables)
             {
-                Db.Query(ct +table);
+                Query(ct +table);
             }
         }
-
-        //private void DeleteTables() { }
     }
 }
