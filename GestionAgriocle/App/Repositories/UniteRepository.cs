@@ -94,7 +94,7 @@ namespace GestionAgriocle.App.Repositories
                 }
                 catch (Exception exception)
                 {
-                    throw new RepositoryException($"Erreur lors de la récuperation des unités", nameof(UniteRepository), "GetAdd", exception);
+                    throw new RepositoryException($"Erreur lors de la récuperation de l'unité", nameof(UniteRepository), "Get", exception);
                 }
                 finally
                 {
@@ -128,7 +128,7 @@ namespace GestionAgriocle.App.Repositories
                 }
                 catch (Exception exception)
                 {
-                    throw new RepositoryException($"Erreur lors de la récuperation des unités",nameof(UniteRepository),"GetAdd",exception);
+                    throw new RepositoryException($"Erreur lors de la récuperation des unités",nameof(UniteRepository),"GetAll",exception);
                 }
                 finally
                 {
