@@ -1,4 +1,5 @@
-﻿using GestionAgriocle.App.Db;
+﻿using GestionAgriocle;
+using GestionAgriocle.App.Db;
 using GestionAgriocle.App.Repositories;
 using GestionAgriocle.App.Utils;
 using MySql.Data.MySqlClient;
@@ -74,15 +75,16 @@ static void RequestHandler(HttpListenerContext context)
     {
         database.Connection.Close();
     }*/
+    object data = new
+    {
+        request1 = RessourceQuery.GetAllCultures(),
+        request2 = RessourceQuery.GetAllCulturesByNoParcelle(10),
+    };
 
-    var repositoryParcelle = new ParcelleRepository();
-    var parcelles = repositoryParcelle.GetAll();
-
-    string jsonReponse = JsonSerializer.Serialize(parcelles);
+    string jsonReponse = JsonSerializer.Serialize(data);
 
     // créer la réponse
     byte[] reponseBytes = Encoding.UTF8.GetBytes(jsonReponse);
     context.Response.ContentType = "application/json";
     context.Response.OutputStream.Write(reponseBytes, 0, reponseBytes.Length);
-    context.Response.Close();
 }
