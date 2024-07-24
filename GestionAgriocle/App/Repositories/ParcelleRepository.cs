@@ -152,9 +152,8 @@ namespace GestionAgriocle.App.Repositories
             if (entity.NoParcelle == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            using (MySqlCommand command = new MySqlCommand($"UPDATE Parcelle SET no_parcelle = @NoParcelle, nom_parcelle = @NomParcelle, surface = @Surface, coordonnees = @Coordonnees WHERE no_parcelle=@NoParcelle);", _connection))
+            using (MySqlCommand command = new MySqlCommand($"UPDATE Parcelle SET nom_parcelle = @NomParcelle, surface = @Surface, coordonnees = @Coordonnees WHERE no_parcelle=@NoParcelle);", _connection))
             {
-                command.Parameters.AddWithValue("@NoParcelle", entity.NoParcelle);
                 command.Parameters.AddWithValue("@NomParcelle", entity.NomParcelle);
                 command.Parameters.AddWithValue("@Surface", entity.Surface);
                 command.Parameters.AddWithValue("@Noordonnees", entity.Coordonnees);
@@ -182,9 +181,12 @@ namespace GestionAgriocle.App.Repositories
                 throw new ArgumentNullException(nameof(entity));
             
             List<string>columnsToUpdate = new List<string>();
-            if (entity.NomParcelle == null) columnsToUpdate.Add("nom_parcelle = @NomParcelle");
-            if (entity.Surface == null) columnsToUpdate.Add("surface = @Surface");
-            if (entity.Coordonnees == null) columnsToUpdate.Add("coordonnees = @Coordonnees");
+            if (entity.NomParcelle == null)
+                columnsToUpdate.Add("nom_parcelle = @NomParcelle");
+            if (entity.Surface == null)
+                columnsToUpdate.Add("surface = @Surface");
+            if (entity.Coordonnees == null)
+                columnsToUpdate.Add("coordonnees = @Coordonnees");
 
             using (MySqlCommand command = new MySqlCommand($"UPDATE Parcelle SET {string.Join(", ", columnsToUpdate)} WHERE no_parcelle=@NoParcelle);", _connection))
             {
